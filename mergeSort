@@ -1,0 +1,51 @@
+void merge(int a[], int low, int mid, int high) {
+
+	// int cnt = 0;
+	int left = low;
+	int right = mid + 1;
+	vector<int>temp;
+	while (left <= mid && right <= high) {
+
+		if (a[left] <= a[right]) {
+			temp.pb(a[left]);
+			left++;
+		}
+		else {
+			temp.pb(a[right]);
+			right++;
+		}
+	}
+	while (left <= mid) {
+		temp.pb(a[left]);
+		left++;
+	}
+	while (right <= high) {
+		temp.pb(a[right]);
+		right++;
+	}
+	for (int i = low; i < high; ++i)
+	{
+		a[i] = temp[i - low];
+	}
+	// return cnt;
+}
+
+void mergeSort(int a[], int low, int high) {
+
+	if (low < high) {
+		int mid = (low + high) >> 1;
+		mergeSort(a, 0, mid);
+		mergeSort(a, mid + 1, high);
+
+		merge(a, low, mid, high);
+	}
+}
+
+void n4v33n() {
+
+	int v[9] = {6, 7, 3, 2, 2, 1, 2, 6, 7};
+	int n = 9;
+	mergeSort(v, 0, n - 1);
+	for (auto i : v)cout << i << " ";
+
+}
