@@ -1,26 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int partition(int arr[], int l, int h)
+int partition(int arr[], int low, int high)
 {
-	int pivot = arr[l];
-	int i = l - 1, j = h + 1;
-	while (true) {
-		do {
+	int i = low;
+	int j = high;
+	int pivot = arr[low];
+	while (i < j)
+	{
+		while (pivot >= arr[i])
 			i++;
-		} while (arr[i] < pivot);
-		do {
+		while (pivot < arr[j])
 			j--;
-		} while (arr[j] > pivot);
-		if (i >= j)return j;
-		swap(arr[i], arr[j]);
+		if (i < j)
+			swap(arr[i], arr[j]);
 	}
+	swap(arr[low], arr[j]);
+	return j;
 }
 
 void qSort(int arr[], int l, int h) {
 	if (l < h) {
 		int p = partition(arr, l, h);
-		qSort(arr, l, p);
+		qSort(arr, l, p - 1);
 		qSort(arr, p + 1, h);
 	}
 }
