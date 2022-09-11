@@ -1,0 +1,101 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr<<#x<<" "<<x<<endl;
+#else
+#define debug(x)
+#endif
+//Euclidean algorithm
+//optimised version of gcd
+int gcd(int a, int b) {if (b == 0) {return a;} else return (b, a % b);}
+int lcm(int a, int b) {return (a * b) / gcd(a, b);}
+bool isPrime(int n) {if (n == 1) {return false;} if (n == 2 || n == 3 ) {return true;} if (n & 2 == 0 || n & 3 == 0) {return false;} for (int i = 5; i * i <= n; i = i + 6) {if (n / i == 0 || n / i + 2 == 0) {return false;}} return true;}
+//for printing primes
+void printPrimes(int n) {
+	if (n <= 1)return;
+	for (int i = 2; i * i <= n; ++i)
+	{
+		while (n % i == 0) {
+			cout << i << endl;
+			n = n / i;
+		}
+	}
+	if (n > 1)
+	{
+		cout << n << endl;
+	}
+}
+void newprintPrimes(int n) {
+	if (n <= 1) {return;} while (n % 2 == 0) {cout << "2" << endl; n = n / 2;} while (n % 3 == 0) {cout << "3" << endl; n = n / 3;}
+	for (int i = 5; i * i <= n; i = i + 6) {while (n % i == 0) {cout << i << endl; n = n / i;} while (n & (i + 2) == 0) {cout << i << endl; n = n / i;}} if (n > 3) {cout << n << endl;}
+}
+void addEdge(vector<int> adj[], int u, int v)
+{
+	adj[u].push_back(v);
+	adj[v].push_back(u);
+}
+void printGraph(vector<int> adj[], int V)
+{
+	for (int v = 0; v < V; ++v) {
+		cout << "\n Adjacency list of vertex " << v
+		     << "\n head ";
+		for (auto x : adj[v])
+			cout << "-> " << x;
+		printf("\n");
+	}
+}
+
+void BFS(vector<int>adj[], int N, int src) {
+	int dis[N];
+	for (int i = 0; i < N; ++i)
+	{
+		dis[i] = INT_MAX;
+	}
+	queue<int>q;
+	dis[src] = 0;
+	q.push(src);
+	while (!q.empty()) {
+		int node = q.front();
+		q.pop();
+		for (auto i : adj[node]) {
+			if (dis[node] + 1 < dis[i]) {
+				dis[i] = dis[node] + 1;
+				q.push(i);
+			}
+		}
+	}
+	for (auto i : dis)cout << i << " ";
+
+}
+void solve() {
+
+	int V = 9;
+	vector<int>adj[V];
+	addEdge(adj, 0, 1);
+	addEdge(adj, 0, 3);
+	addEdge(adj, 1, 2);
+	addEdge(adj, 2, 6);
+	addEdge(adj, 3, 4);
+	addEdge(adj, 4, 5);
+	addEdge(adj, 5, 6);
+	addEdge(adj, 6, 7);
+	addEdge(adj, 6, 8);
+	addEdge(adj, 7, 8);
+	// printGraph(adj, V);
+	BFS(adj, V, 0);
+
+}
+
+signed main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+#ifndef ONLINE_JUDGE
+	freopen("error.txt", "w", stderr);
+#endif
+	int t = 1;
+	// cin >> t;
+	while (t--) solve();
+	return 0;
+}
